@@ -1,0 +1,29 @@
+{
+  "name": "sn-auth-web",
+  "version": "1.0.0",
+  "description": "super engine auth for web",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sorrymeika/sn-auth-web.git"
+  },
+  "author": "sunlu",
+  "bugs": {
+    "url": "https://github.com/sorrymeika/sn-auth-web/issues"
+  },
+  "homepage": "https://github.com/sorrymeika/sn-auth-web#readme",
+  "devDependencies": {
+    "egg-bin": "^4.13.1"
+  },
+  "dependencies": {
+    "egg": "^2.23.0",
+    "egg-logger": "^2.4.1",
+    "egg-logrotator": "^3.1.0",
+    "egg-mysql": "^3.0.0",
+    "eslint": "^6.1.0"
+  },
+  "scripts": {
+    "dev": "ln -s ../../sonorpc ./node_modules/sonorpc && egg-bin dev",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
