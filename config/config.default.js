@@ -23,4 +23,9 @@ exports.keys = 'my-cookie-secret-key';
 exports.logger = {
     level: 'INFO',
     dir: '/data/logs/sn-auth-web'
-}
+};
+
+exports.validate = {
+    enable: true,
+    package: 'egg-validate',
+};
