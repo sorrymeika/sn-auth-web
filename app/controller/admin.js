@@ -17,6 +17,7 @@ class AdminController extends Controller {
             password,
             role: 1
         });
+        console.log('login result:', res);
         ctx.body = res;
     }
 }

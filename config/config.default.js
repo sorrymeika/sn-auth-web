@@ -25,7 +25,9 @@ exports.logger = {
     dir: '/data/logs/sn-auth-web'
 };
 
-exports.validate = {
-    enable: true,
-    package: 'egg-validate',
+exports.security = {
+    domainWhiteList: ['http://localhost:10020'],
+    csrf: {
+        enable: false
+    }
 };
