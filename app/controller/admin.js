@@ -17,8 +17,41 @@ class AdminController extends Controller {
             password,
             role: 1
         });
+        const { success, token } = res;
         console.log('login result:', res);
+        if (success) {
+            ctx.cookies.set('atk', token, {
+                maxAge: 24 * 365 * 60 * 60 * 1000,
+                httpOnly: true,
+                signed: false
+            });
+            ctx.cookies.set('aid', res.accountId, {
+                maxAge: 24 * 365 * 60 * 60 * 1000,
+                httpOnly: true,
+                signed: false
+            });
+            delete res.token;
+        }
         ctx.body = res;
+    }
+
+    async verifyToken() {
+        const { ctx } = this;
+        const atk = ctx.cookies.get('atk', {
+            signed: false
+        });
+        const aid = ctx.cookies.get('aid', {
+            signed: false
+        });
+        const res = await ctx.service.auth.verifyToken(aid, atk);
+
+        if (res.success && res.role === 1) {
+            ctx.body = { success: true, code: 1 };
+        } else if (res.success) {
+            ctx.body = { success: false, code: 10002, message: '账号无权限' };
+        } else {
+            ctx.body = res;
+        }
     }
 }
 
