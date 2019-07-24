@@ -51,8 +51,12 @@ exports.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
 };
 
-exports.middleware = ['auth'];
+exports.middleware = ['auth', 'gzip'];
 
 exports.auth = {
     excludes: ['/admin/login']
+};
+
+exports.gzip = {
+    threshold: 2048,
 };
