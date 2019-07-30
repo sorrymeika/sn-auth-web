@@ -1,4 +1,11 @@
 const { Controller } = require("egg");
+const { createClient } = require('sonofs');
+
+const fsClient = createClient({
+    registry: {
+        port: 8123
+    }
+});
 
 class AdminController extends Controller {
     async login() {
@@ -51,6 +58,29 @@ class AdminController extends Controller {
             ctx.body = { success: false, code: 10002, message: '账号无权限' };
         } else {
             ctx.body = res;
+        }
+    }
+
+    async testUpload() {
+        const { ctx } = this;
+        const stream = await ctx.getFileStream();
+        const result = await fsClient.upload(stream.mime, stream);
+
+        console.log(result);
+
+        ctx.body = {};
+    }
+
+    async testFile() {
+        const { ctx } = this;
+        try {
+            const result = await fsClient.getFile(ctx.query.file);
+
+            ctx.type = result.mime;
+            ctx.body = result.buffer;
+        } catch (e) {
+            console.error(e);
+            ctx.body = {};
         }
     }
 }

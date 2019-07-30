@@ -8,7 +8,7 @@ module.exports = options => {
             signed: false
         });
         const url = ctx.url;
-        if (excludes.every((exclude) => (typeof exclude === 'string' ? url.indexOf(exclude) !== -1 : exclude.test(url)))) {
+        if (excludes.some((exclude) => (typeof exclude === 'string' ? url.indexOf(exclude) !== -1 : exclude.test(url)))) {
             await next();
             return;
         }

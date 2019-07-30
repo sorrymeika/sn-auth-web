@@ -54,7 +54,12 @@ exports.cors = {
 exports.middleware = ['auth', 'gzip'];
 
 exports.auth = {
-    excludes: ['/admin/login']
+    excludes: [
+        '/admin/login',
+        '/admin/verifyToken',
+        '/admin/testUpload',
+        '/admin/testFile'
+    ]
 };
 
 exports.gzip = {
