@@ -3,7 +3,9 @@ const { registerConsumer } = require('sonorpc');
 const rpcConsumer = registerConsumer({
     // 服务提供者名称
     providerName: 'auth',
-    port: 3006
+    registry: {
+        port: 3006
+    }
 });
 
 module.exports = {
