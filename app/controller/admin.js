@@ -2,6 +2,7 @@ const { Controller } = require("egg");
 const { createClient } = require('sonofs');
 
 const fsClient = createClient({
+    tmpDir: '/Users/sunlu/Desktop/workspace/nodejs/data/tmp',
     registry: {
         port: 8123
     }
@@ -64,6 +65,7 @@ class AdminController extends Controller {
     async testUpload() {
         const { ctx } = this;
         const stream = await ctx.getFileStream();
+
         const result = await fsClient.upload(stream.mime, stream);
 
         console.log(result);
