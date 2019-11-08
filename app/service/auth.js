@@ -1,14 +1,32 @@
 const { Service } = require("egg");
 
 class AuthService extends Service {
-    login({ account, password, role }) {
+    async login({ account, password, app }) {
         const { ctx } = this;
-        return ctx.rpc.invoke('auth.login', [{ account, password, role }]);
-    }
+        const res = await ctx.authRPC.invoke('auth.login', [{ account, password, app }]);
 
-    verifyToken(accountId, token) {
-        const { ctx } = this;
-        return ctx.rpc.invoke('auth.verifyToken', [accountId, token]);
+        const { success, token, wtk } = res;
+        console.log('login result:', res);
+        if (success) {
+            ctx.cookies.set('tk', token, {
+                maxAge: 24 * 365 * 60 * 60 * 1000,
+                httpOnly: true,
+                signed: false
+            });
+            ctx.cookies.set('aid', res.accountId, {
+                maxAge: 24 * 365 * 60 * 60 * 1000,
+                httpOnly: true,
+                signed: false
+            });
+            ctx.cookies.set('wtk', wtk, {
+                maxAge: 24 * 365 * 60 * 60 * 1000,
+                httpOnly: false,
+                signed: false
+            });
+            delete res.token;
+        }
+
+        return res;
     }
 }
 

@@ -18,7 +18,7 @@ exports.mysql = {
     agent: false,
 };
 
-exports.keys = 'my-cookie-secret-key';
+exports.keys = 'cookie-secret-key-003924';
 
 exports.logger = {
     level: 'INFO',
@@ -26,7 +26,7 @@ exports.logger = {
 };
 
 exports.security = {
-    domainWhiteList: ['http://localhost:10020'],
+    domainWhiteList: ['http://localhost:10020', 'http://localhost:10021'],
     csrf: {
         enable: false
     }
@@ -51,17 +51,14 @@ exports.cors = {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
 };
 
-exports.middleware = ['auth', 'gzip'];
+// exports.middleware = ['gzip'];
+// exports.gzip = {
+//     threshold: 2048,
+// };
 
 exports.auth = {
-    excludes: [
-        '/admin/login',
-        '/admin/verifyToken',
-        '/admin/testUpload',
-        '/admin/testFile'
-    ]
-};
-
-exports.gzip = {
-    threshold: 2048,
+    registry: {
+        port: 3006
+    },
+    permissions: require('./permissions'),
 };
