@@ -3,7 +3,7 @@ const { Service } = require("egg");
 class AuthService extends Service {
     async login({ account, password, app }) {
         const { ctx } = this;
-        const res = await ctx.authRPC.invoke('auth.login', [{ account, password, app }]);
+        const res = await this.app.authRPC.invoke('auth.login', [{ account, password, app }]);
 
         const { success, token, wtk } = res;
         console.log('login result:', res);
