@@ -14,7 +14,7 @@
     ],
     "autoConfig": [
         {
-            "template": "config.js.vm",
+            "template": "config.js",
             "destFile": "app/config/config.default.js"
         }
     ]
