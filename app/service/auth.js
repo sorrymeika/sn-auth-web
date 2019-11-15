@@ -6,23 +6,21 @@ class AuthService extends Service {
         const res = await this.app.authRPC.invoke('auth.login', [{ account, password, app }]);
 
         const { success, token, wtk } = res;
-        console.log('login result:', res);
         if (success) {
-            ctx.cookies.set('tk', token, {
+            const cookieOptions = {
                 maxAge: 24 * 365 * 60 * 60 * 1000,
                 httpOnly: true,
                 signed: false
-            });
-            ctx.cookies.set('aid', res.accountId, {
-                maxAge: 24 * 365 * 60 * 60 * 1000,
-                httpOnly: true,
-                signed: false
-            });
-            ctx.cookies.set('wtk', wtk, {
-                maxAge: 24 * 365 * 60 * 60 * 1000,
-                httpOnly: false,
-                signed: false
-            });
+            };
+
+            if (!/^(\d+\.\d+\.\d+\.\d+|localhost)$/.test(ctx.request.hostname)) {
+                const parts = ctx.request.hostname.split('.');
+                cookieOptions.domain = parts.slice(ctx.request.hostname.endsWith('.com.cn') ? -3 : -2).join('.');
+            }
+
+            ctx.cookies.set('tk', token, cookieOptions);
+            ctx.cookies.set('aid', res.accountId, cookieOptions);
+            ctx.cookies.set('wtk', wtk, cookieOptions);
             delete res.token;
         }
 
