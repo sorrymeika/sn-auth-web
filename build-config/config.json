@@ -15,7 +15,7 @@
     "autoConfig": [
         {
             "template": "config.js",
-            "destFile": "app/config/config.default.js"
+            "destFile": "config/config.default.js"
         }
     ]
 }
