@@ -3,10 +3,10 @@ const { Controller } = require("egg");
 class TestController extends Controller {
     async info() {
         const { ctx } = this;
-        const res = await ctx.service.test.test(ctx.request.query);
+        // const res = await ctx.service.test.test(ctx.request.query);
         ctx.body = {
-            name: `hello test`,
-            data: res
+            name: `hello world!`,
+            // data: res
         };
     }
 }
